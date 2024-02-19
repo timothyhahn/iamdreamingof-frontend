@@ -3,6 +3,7 @@
 	import gerunds from '../lists/gerunds.json';
 	import concepts from '../lists/concepts.json';
 	import { distance, closest } from 'fastest-levenshtein';
+	import Tooltip from 'sv-tooltip';
 	import { onMount } from 'svelte';
 	import { formatDate } from '$lib/date';
 
@@ -96,6 +97,19 @@
 		let wordthing = words[idx];
 		return correct.includes(wordthing.word);
 	}
+
+	function getTooltip(idx: number, correctWords: string[]) {
+		let tooltipFor = getWord(idx, correctWords);
+		if (tooltipFor === '(object)') {
+			return 'A concrete noun, like a duck or a hotel.';
+		} else if (tooltipFor === '(gerund)') {
+			return 'A verb that ends in -ing, like dreaming or building.';
+		} else if (tooltipFor === '(concept)') {
+			return 'An abstract noun, like liberty or death.';
+		} else {
+			return null;
+		}
+	}
 </script>
 
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 poppins-medium">
@@ -104,19 +118,49 @@
 		{#if words && words.length > 0}
 			<div class="dark:text-slate-300 text-3xl annapurna-sil-regular py-6 text-center" style="line-height: 5rem;">
 				I am dreaming of
-				<span class="border-b-2 px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(0, correctWords)}</span>,
-				<span class="border-b-2 px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(1, correctWords)}</span>, and
-				<span class="border-b-2 px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(2, correctWords)}</span>
+				{#if !isCorrect(0, correctWords)}
+					<Tooltip tip={getTooltip(0, correctWords)}>
+				<span class="border-b-2 border-dashed px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">
+					{getWord(0, correctWords)}
+				</span></Tooltip>
+				{:else}
+					<span class="border-b-2 border-dashed px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">
+					{getWord(0, correctWords)}
+				</span>
+				{/if}
+				,
+				{#if !isCorrect(1, correctWords)}
+					<Tooltip tip={getTooltip(1, correctWords)}>
+						<span
+							class="border-b-2 border-dashed px-3 {!isCorrect(1, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(1, correctWords)}</span>
+					</Tooltip>
+				{:else}
+					<span
+						class="border-b-2 border-dashed px-3 {!isCorrect(1, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(1, correctWords)}</span>
+				{/if}
+
+				, and
+				{#if !isCorrect(2, correctWords)}
+					<Tooltip tip={getTooltip(2, correctWords)}>
+						<span
+							class="border-b-2 border-dashed px-3 {!isCorrect(2, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(2, correctWords)}</span>
+					</Tooltip>
+				{:else}
+					<span
+						class="border-b-2 border-dashed px-3 {!isCorrect(2, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(2, correctWords)}</span>
+				{/if}
 			</div>
 		{/if}
 		{#if challenge}
 			<picture>
 				<source type="image/webp" srcset={challenge['image_url_webp']} />
 				<source type="image/jpeg" srcset={challenge['image_url_jpeg']} />
-				<img src={challenge['image_url_jpeg']} alt={challenge['description']} class="shadow-sm shadow-slate-500 rounded-sm">
+				<img src={challenge['image_url_jpeg']} alt={challenge['description']}
+						 class="shadow-sm shadow-slate-500 rounded-sm">
 			</picture>
 		{/if}
-		<hr class="my-3 border-dashed" />
+		<hr class="my-3" />
+
 		{#if correctWords.length !== answer.length}
 			<div class="mt-2">
 				<input
@@ -142,40 +186,40 @@
 		{/if}
 
 		<div class="flex flex-col content-center">
-		{#if !challengeComplete && !revealInitiated}
-			<button
-				on:click={() => revealInitiated = true}
-				class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
+			{#if !challengeComplete && !revealInitiated}
+				<button
+					on:click={() => revealInitiated = true}
+					class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
 				>Reveal
-			</button>
-		{/if}
-		{#if !challengeComplete && revealInitiated}
+				</button>
+			{/if}
+			{#if !challengeComplete && revealInitiated}
 
-			<div class="dark:text-slate-400 mt-6">
-				Are you sure you want to reveal the answer?
-			</div>
-			<button
-				on:click={reveal}
-				class="rounded bg-red-950 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-red-600 my-6"
-			>Reveal
+				<div class="dark:text-slate-400 mt-6">
+					Are you sure you want to reveal the answer?
+				</div>
+				<button
+					on:click={reveal}
+					class="rounded bg-red-950 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-red-600 my-6"
+				>Reveal
 
-			</button>
+				</button>
 
 
-		{/if}
-		{#if challengeComplete && originalPrompt}
-			<div class="dark:text-slate-400 my-3">
-				{originalPrompt}
-			</div>
+			{/if}
+			{#if challengeComplete && originalPrompt}
+				<div class="dark:text-slate-400 my-3">
+					{originalPrompt}
+				</div>
 			{/if}
 
-		{#if challengeComplete && currentLevel < levels.length - 1}
-			<button
-				on:click={nextLevel}
-				class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
+			{#if challengeComplete && currentLevel < levels.length - 1}
+				<button
+					on:click={nextLevel}
+					class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
 				>Next Level
-			</button>
-		{/if}
+				</button>
+			{/if}
 		</div>
 	</div>
 </div>
