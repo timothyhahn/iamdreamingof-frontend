@@ -12,6 +12,7 @@
 	let challenge = undefined;
 	let guessedWords = [];
 	let correctWords = [];
+	let revealInitiated = false;
 	let levels = ['easy', 'medium', 'hard', 'dreaming'];
 	let currentLevel = 0;
 
@@ -20,6 +21,8 @@
 	$: challenge = data && 'challenges' in data ? data['challenges'][levels[currentLevel]] : null;
 	$: answer = challenge ? challenge.words.map((word) => word.word) : [];
 	$: words = challenge ? challenge.words : [];
+	$: originalPrompt = challenge ? challenge.prompt : '';
+	$: challengeComplete = correctWords.length === answer.length;
 
 	onMount(async () => {
 		const res = await fetch(
@@ -58,10 +61,10 @@
 
 	function getWord(idx: number, correct: string[]) {
 		let wordthing = words[idx];
-		if (correct.includes(wordthing.word)) {
+		if (isCorrect(idx, correct)) {
 			return wordthing.word;
 		} else {
-			return `(   ${wordthing.type}    )`;
+			return `(${wordthing.type})`;
 		}
 	}
 
@@ -76,6 +79,7 @@
 		currentLevel++;
 		correctWords = [];
 		guessedWords = [];
+		revealInitiated = false;
 	}
 
 	function getGuessedWords(guessedWords: string[]): string {
@@ -87,29 +91,32 @@
 			return `${guessedWords.slice(0, -1).join(', ')}, or ${guessedWords.slice(-1)}`;
 		}
 	}
+
+	function isCorrect(idx: number, correct: string[]) {
+		let wordthing = words[idx];
+		return correct.includes(wordthing.word);
+	}
 </script>
 
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-	<!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 poppins-medium">
 	<div class="mx-auto max-w-3xl">
 		<div class="py-3"></div>
-		<!-- Content goes here -->
-		{#if challenge}
-			<picture class="shadow-lg">
-				<source type="image/webp" srcset={challenge['image_url_webp']} />
-				<source type="image/jpeg" srcset={challenge['image_url_jpeg']} />
-				<img src={challenge['image_url_jpeg']} alt={challenge['description']} />
-			</picture>
-		{/if}
 		{#if words && words.length > 0}
-			<div class="dark:text-slate-300 text-3xl font-serif">
-				I am dreaming of {getWord(0, correctWords)}, {getWord(1, correctWords)}, and {getWord(
-					2,
-					correctWords
-				)}
+			<div class="dark:text-slate-300 text-3xl annapurna-sil-regular py-6 text-center" style="line-height: 5rem;">
+				I am dreaming of
+				<span class="border-b-2 px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(0, correctWords)}</span>,
+				<span class="border-b-2 px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(1, correctWords)}</span>, and
+				<span class="border-b-2 px-3 {!isCorrect(0, correctWords) ? 'dark:text-slate-500' : ''}">{getWord(2, correctWords)}</span>
 			</div>
 		{/if}
-		<hr class="my-3" />
+		{#if challenge}
+			<picture>
+				<source type="image/webp" srcset={challenge['image_url_webp']} />
+				<source type="image/jpeg" srcset={challenge['image_url_jpeg']} />
+				<img src={challenge['image_url_jpeg']} alt={challenge['description']} class="shadow-sm shadow-slate-500 rounded-sm">
+			</picture>
+		{/if}
+		<hr class="my-3 border-dashed" />
 		{#if correctWords.length !== answer.length}
 			<div class="mt-2">
 				<input
@@ -128,26 +135,47 @@
 			{/if}
 		{/if}
 
-		{#if guessedWords.length > 0}
+		{#if guessedWords.length > 0 && !challengeComplete}
 			<div class="dark:text-slate-400 my-3">
 				I don't think I was dreaming of {getGuessedWords(guessedWords)}...
 			</div>
 		{/if}
 
-		{#if correctWords.length !== answer.length}
+		<div class="flex flex-col content-center">
+		{#if !challengeComplete && !revealInitiated}
 			<button
-				on:click={reveal}
+				on:click={() => revealInitiated = true}
 				class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
 				>Reveal
 			</button>
 		{/if}
+		{#if !challengeComplete && revealInitiated}
 
-		{#if correctWords.length === answer.length && currentLevel < levels.length - 1}
+			<div class="dark:text-slate-400 mt-6">
+				Are you sure you want to reveal the answer?
+			</div>
+			<button
+				on:click={reveal}
+				class="rounded bg-red-950 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-red-600 my-6"
+			>Reveal
+
+			</button>
+
+
+		{/if}
+		{#if challengeComplete && originalPrompt}
+			<div class="dark:text-slate-400 my-3">
+				{originalPrompt}
+			</div>
+			{/if}
+
+		{#if challengeComplete && currentLevel < levels.length - 1}
 			<button
 				on:click={nextLevel}
 				class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
 				>Next Level
 			</button>
 		{/if}
+		</div>
 	</div>
 </div>
