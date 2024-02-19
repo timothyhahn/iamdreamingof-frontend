@@ -113,6 +113,9 @@
 </script>
 
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 poppins-medium">
+	<div class="dark:text-slate-600">
+		Dreams for {formatDate(new Date())}
+	</div>
 	<div class="mx-auto max-w-3xl">
 		<div class="py-3"></div>
 		{#if words && words.length > 0}
@@ -238,9 +241,14 @@
 				<button
 					on:click={nextLevel}
 					class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
-					>Next Level
+					>Next Dream
 				</button>
 			{/if}
+			{#if challengeComplete && currentLevel >= levels.length - 1}
+				<div class="dark:text-slate-200 my-3">
+					I am done dreaming for today, come back tomorrow.
+				</div>
+				{/if}
 		</div>
 	</div>
 </div>
