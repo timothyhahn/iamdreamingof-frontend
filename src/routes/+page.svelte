@@ -3,7 +3,6 @@
 	import gerunds from '../lists/gerunds.json';
 	import concepts from '../lists/concepts.json';
 	import { distance, closest } from 'fastest-levenshtein';
-	import Tooltip from 'sv-tooltip';
 	import { onMount } from 'svelte';
 	import { formatDate } from '$lib/date';
 
@@ -112,70 +111,36 @@
 	}
 </script>
 
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 poppins-medium">
-	<div class="dark:text-slate-600">
-		Dreams for {formatDate(new Date())}
-	</div>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 poppins-medium dark:text-iamdreamingof-200 text-iamdreamingof-700">
 	<div class="mx-auto max-w-3xl">
 		<div class="py-3"></div>
 		{#if words && words.length > 0}
 			<div
-				class="dark:text-slate-300 text-3xl annapurna-sil-regular py-6 text-center"
+				class="dark:text-iamdreamingof-200 text-iamdreamingof-500 text-3xl annapurna-sil-regular py-6 text-center"
 				style="line-height: 5rem;"
 			>
 				I am dreaming of
-				{#if !isCorrect(0, correctWords)}
-					<Tooltip tip={getTooltip(0, correctWords)}>
-						<span
-							class="border-b-2 border-dashed px-3 {!isCorrect(0, correctWords)
-								? 'dark:text-slate-500'
+				<span
+					class="border-b-2 border-dashed px-3 {!isCorrect(0, correctWords)
+								? 'dark:text-iamdreamingof-400 text-iamdreamingof-200'
 								: ''}"
-						>
+				>
 							{getWord(0, correctWords)}
-						</span></Tooltip
-					>
-				{:else}
-					<span
-						class="border-b-2 border-dashed px-3 {!isCorrect(0, correctWords)
-							? 'dark:text-slate-500'
-							: ''}"
-					>
-						{getWord(0, correctWords)}
-					</span>
-				{/if}
+						</span>
 				,
-				{#if !isCorrect(1, correctWords)}
-					<Tooltip tip={getTooltip(1, correctWords)}>
-						<span
-							class="border-b-2 border-dashed px-3 {!isCorrect(1, correctWords)
-								? 'dark:text-slate-500'
+				<span
+					class="border-b-2 border-dashed px-3 {!isCorrect(1, correctWords)
+								? 'dark:text-iamdreamingof-400 text-iamdreamingof-200'
 								: ''}">{getWord(1, correctWords)}</span
-						>
-					</Tooltip>
-				{:else}
-					<span
-						class="border-b-2 border-dashed px-3 {!isCorrect(1, correctWords)
-							? 'dark:text-slate-500'
-							: ''}">{getWord(1, correctWords)}</span
-					>
-				{/if}
-
+				>
 				, and
-				{#if !isCorrect(2, correctWords)}
-					<Tooltip tip={getTooltip(2, correctWords)}>
-						<span
-							class="border-b-2 border-dashed px-3 {!isCorrect(2, correctWords)
-								? 'dark:text-slate-500'
+
+				<span
+					class="border-b-2 border-dashed px-3 {!isCorrect(2, correctWords)
+								? 'dark:text-iamdreamingof-400 text-iamdreamingof-200'
 								: ''}">{getWord(2, correctWords)}</span
-						>
-					</Tooltip>
-				{:else}
-					<span
-						class="border-b-2 border-dashed px-3 {!isCorrect(2, correctWords)
-							? 'dark:text-slate-500'
-							: ''}">{getWord(2, correctWords)}</span
-					>
-				{/if}
+				>
+				.
 			</div>
 		{/if}
 		{#if challenge}
@@ -185,7 +150,7 @@
 				<img
 					src={challenge['image_url_jpeg']}
 					alt={challenge['description']}
-					class="shadow-sm shadow-slate-500 rounded-sm"
+					class="shadow-sm shadow-iamdreamingof-500 rounded-sm"
 				/>
 			</picture>
 		{/if}
@@ -196,43 +161,46 @@
 				<input
 					bind:value={word}
 					placeholder="What am I dreaming of?"
-					class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-800 sm:text-sm sm:leading-6"
+					class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-iamdreamingof-800 sm:text-sm sm:leading-6"
 				/>
 			</div>
 			{#if showSuggestion}
-				<div class="dark:text-white">
+				<div class="dark:text-iamdreamingof-100 text-iamdreamingof-800">
 					<p>
 						Perhaps you are thinking of
-						<button on:click={acceptSuggestion} class="text-blue-300">{suggestion}</button>
+						<button on:click={acceptSuggestion}
+										class="text-blue-300 rounded shadow-sm hover bg-white/10 px-3 my-3">{suggestion}</button>
 					</p>
 				</div>
 			{/if}
 		{/if}
 
 		{#if guessedWords.length > 0 && !challengeComplete}
-			<div class="dark:text-slate-400 my-3">
+			<div class="dark:text-iamdreamingof-400 text-iamdreamingof-700 my-3">
 				I don't think I was dreaming of {getGuessedWords(guessedWords)}...
 			</div>
 		{/if}
 
-		<div class="flex flex-col content-center">
+		<div class="flex flex-col content-center dark:text-iamdreamingof-700 text-iamdreamingof-100">
 			{#if !challengeComplete && !revealInitiated}
 				<button
 					on:click={() => (revealInitiated = true)}
-					class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
-					>Reveal
+					class="rounded bg-iamdreamingof-600 dark:bg-iamdreamingof-100 px-2 py-1 text-sm font-semibold shadow-sm hover:bg-white/20 dark:hover:bg-iamdreamingof-300 my-6"
+				>Reveal
 				</button>
 			{/if}
 			{#if !challengeComplete && revealInitiated}
-				<div class="dark:text-slate-400 mt-6">Are you sure you want to reveal the answer?</div>
+				<div class="dark:text-iamdreamingof-400 text-iamdreamingof-700 mt-6">Are you sure you want to reveal the
+					answer?
+				</div>
 				<button
 					on:click={reveal}
-					class="rounded bg-red-950 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-red-600 my-6"
-					>Reveal
+					class="rounded bg-red-950 px-2 py-1 text-sm text-white font-semibold shadow-sm hover:bg-red-600 my-6"
+				>Reveal
 				</button>
 			{/if}
 			{#if challengeComplete && originalPrompt}
-				<div class="dark:text-slate-400 my-3">
+				<div class="dark:text-iamdreamingof-400 text-iamdreamingof-700 my-3">
 					{originalPrompt}
 				</div>
 			{/if}
@@ -240,15 +208,15 @@
 			{#if challengeComplete && currentLevel < levels.length - 1}
 				<button
 					on:click={nextLevel}
-					class="rounded bg-white/10 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-white/20 my-6"
-					>Next Dream
+					class="rounded bg-iamdreamingof-600 dark:bg-iamdreamingof-100 px-2 py-1 text-sm font-semibold dark:text-iamdreamingof-700 text-white shadow-sm dark:hover:bg-iamdreamingof-300 my-6"
+				>Next Dream
 				</button>
 			{/if}
 			{#if challengeComplete && currentLevel >= levels.length - 1}
-				<div class="dark:text-slate-200 my-3">
+				<div class="dark:text-iamdreamingof-200 my-3">
 					I am done dreaming for today, come back tomorrow.
 				</div>
-				{/if}
+			{/if}
 		</div>
 	</div>
 </div>
