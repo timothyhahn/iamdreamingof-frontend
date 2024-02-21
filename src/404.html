@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<meta charset="utf-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Annapurna+SIL:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+			rel="stylesheet"
+		/>
+
+		<title>I am dreaming of...</title>
+	</head>
+	<body data-sveltekit-preload-data="hover" class="dark:bg-iamdreamingof-800 bg-iamdreamingof-50">
+		<div style="display: contents">
+			<div
+				class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 poppins-medium dark:text-iamdreamingof-200 text-iamdreamingof-700"
+			>
+				<div class="mx-auto max-w-3xl">Nothing found here...</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		(function (window, document, dataLayerName, id) {
+			(window[dataLayerName] = window[dataLayerName] || []),
+				window[dataLayerName].push({ start: new Date().getTime(), event: 'stg.start' });
+			var scripts = document.getElementsByTagName('script')[0],
+				tags = document.createElement('script');
+			function stgCreateCookie(a, b, c) {
+				var d = '';
+				if (c) {
+					var e = new Date();
+					e.setTime(e.getTime() + 24 * c * 60 * 60 * 1e3), (d = '; expires=' + e.toUTCString());
+					f = '; SameSite=Strict';
+				}
+				document.cookie = a + '=' + b + d + f + '; path=/';
+			}
+			var isStgDebug =
+				(window.location.href.match('stg_debug') || document.cookie.match('stg_debug')) &&
+				!window.location.href.match('stg_disable_debug');
+			stgCreateCookie('stg_debug', isStgDebug ? 1 : '', isStgDebug ? 14 : -1);
+			var qP = [];
+			dataLayerName !== 'dataLayer' && qP.push('data_layer_name=' + dataLayerName),
+				isStgDebug && qP.push('stg_debug');
+			var qPString = qP.length > 0 ? '?' + qP.join('&') : '';
+			(tags.async = !0),
+				(tags.src = 'https://tmhhn.containers.piwik.pro/' + id + '.js' + qPString),
+				scripts.parentNode.insertBefore(tags, scripts);
+			!(function (a, n, i) {
+				a[n] = a[n] || {};
+				for (var c = 0; c < i.length; c++)
+					!(function (i) {
+						(a[n][i] = a[n][i] || {}),
+							(a[n][i].api =
+								a[n][i].api ||
+								function () {
+									var a = [].slice.call(arguments, 0);
+									'string' == typeof a[0] &&
+										window[dataLayerName].push({
+											event: n + '.' + i + ':' + a[0],
+											parameters: [].slice.call(arguments, 1)
+										});
+								});
+					})(i[c]);
+			})(window, 'ppms', ['tm', 'cm']);
+		})(window, document, 'dataLayer', '9d80af48-3c72-4c78-be0d-7984c42b5c59');
+	</script>
+</html>
