@@ -113,10 +113,9 @@
 
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 poppins-medium dark:text-iamdreamingof-200 text-iamdreamingof-700">
 	<div class="mx-auto max-w-3xl">
-		<div class="py-3"></div>
 		{#if words && words.length > 0}
 			<div
-				class="dark:text-iamdreamingof-200 text-iamdreamingof-500 text-3xl annapurna-sil-regular py-6 text-center"
+				class="dark:text-iamdreamingof-200 text-iamdreamingof-500 text-3xl annapurna-sil-regular pb-6 text-center"
 				style="line-height: 5rem;"
 			>
 				I am dreaming of
