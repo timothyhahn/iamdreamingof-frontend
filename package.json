@@ -40,8 +40,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@svelte-plugins/tooltips": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
-		"fastest-levenshtein": "^1.0.16",
-		"sv-tooltip": "^0.1.7"
+		"fastest-levenshtein": "^1.0.16"
 	}
 }
