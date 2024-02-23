@@ -96,7 +96,7 @@
 	{/if}
 {:else}
 	<!-- TODO: Would be much better to iterate over, but eh -->
-	<h1>What I dreamed of on {day.date}</h1>
+	<h1 class="text-sm text-iamdreamingof-300">What I dreamed of on {day.date}</h1>
 	<Challenge challenge={challenges.dreaming} solved={true} />
 	<Challenge challenge={challenges.hard} solved={true} />
 	<Challenge challenge={challenges.medium} solved={true} />
