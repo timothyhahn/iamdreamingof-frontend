@@ -11,7 +11,7 @@
 
 	let word: string = '';
 
-	$: suggestion = closest(word, getObjects(wordList, word));
+	$: suggestion = closest(word.toLowerCase(), getObjects(wordList, word.toLowerCase()));
 	$: showSuggestion = word.length > 0;
 
 	function getObjects(objects: string[], word: string) {
