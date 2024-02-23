@@ -15,6 +15,9 @@
 	$: showSuggestion = word.length > 0;
 
 	function getObjects(objects: string[], word: string) {
+		if (objects.includes(word)) {
+			return [word];
+		}
 		if (word.length > 3) {
 			return objects;
 		} else {
