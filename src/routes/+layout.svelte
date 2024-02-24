@@ -29,7 +29,7 @@
 
 		<hr class="text-amber-50" />
 		<div class="py-3">
-			Made with 🤪 by <a href="https://github.com/timothyhahn" class="text-blue-600">Tim</a>
+			Made with 🤪 by <a href="https://github.com/timothyhahn/iamdreamingof-frontend" class="text-blue-600">Tim</a>
 		</div>
 	</div>
 </div>
