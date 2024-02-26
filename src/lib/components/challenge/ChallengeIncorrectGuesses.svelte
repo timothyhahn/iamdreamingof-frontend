@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let incorrectGuesses: string[];
 
-	function getGuessedWords(): string {
+	$: getGuessedWords = (): string => {
 		if (incorrectGuesses.length === 1) {
 			return incorrectGuesses[0];
 		} else if (incorrectGuesses.length === 2) {
