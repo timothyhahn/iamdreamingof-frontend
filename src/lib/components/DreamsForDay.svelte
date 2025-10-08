@@ -14,7 +14,7 @@
 	let day: DreamsForDay;
 	let finished = false;
 	let error: string;
-	$: if (id) {
+	$: if (id && !finished) {
 		loadDay();
 	}
 	$: challenges = day?.challenges;
@@ -87,20 +87,25 @@
 	</div>
 {:else if !finished}
 	{#if currentChallenge}
+		{@const isFinal = currentLevel >= LEVELS.length - 1}
 		<Challenge
 			challenge={currentChallenge}
-			finalChallenge={!!currentLevel && isFinalLevel()}
-			on:nextLevel={nextLevel}
-			on:finish={finish}
+			finalChallenge={isFinal}
+			onNextLevel={nextLevel}
+			onFinish={finish}
 		/>
 	{/if}
 {:else}
 	<!-- TODO: Would be much better to iterate over, but eh -->
-	<h1 class="text-sm text-iamdreamingof-300">What I dreamed of on {day.date}</h1>
-	<Challenge challenge={challenges.dreaming} solved={true} />
-	<Challenge challenge={challenges.hard} solved={true} />
-	<Challenge challenge={challenges.medium} solved={true} />
-	<Challenge challenge={challenges.easy} solved={true} />
+	{#if challenges && day}
+		<h1 class="text-sm text-iamdreamingof-300">What I dreamed of on {day.date}</h1>
+		<Challenge challenge={challenges.dreaming} solved={true} />
+		<Challenge challenge={challenges.hard} solved={true} />
+		<Challenge challenge={challenges.medium} solved={true} />
+		<Challenge challenge={challenges.easy} solved={true} />
+	{:else}
+		<div>Loading final results...</div>
+	{/if}
 	{#if id === 'today'}
 		<div class="dark:text-iamdreamingof-200 my-3">
 			I am done dreaming for today, come back tomorrow.

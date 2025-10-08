@@ -31,6 +31,8 @@
 				<div class="absolute right-0 top-0 pr-4 pt-4">
 					<button
 						type="button"
+						data-testid="close-modal"
+						aria-label="Close modal"
 						class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 						on:click={() => dialog.close()}
 					>
@@ -136,6 +138,7 @@
 							<div class="flex items-center flex-col">
 								<button
 									on:click={() => dialog.close()}
+									data-testid="dismiss-help"
 									class="text-iamdreamingof-800 rounded bg-iamdreamingof-600 dark:bg-iamdreamingof-100 px-2 py-1 text-sm font-semibold shadow-sm hover:bg-white/20 dark:hover:bg-iamdreamingof-300 my-6"
 									>Dismiss This Help</button
 								>

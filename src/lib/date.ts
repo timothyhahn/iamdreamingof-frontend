@@ -10,6 +10,10 @@ function join(date: Date, options: Intl.DateTimeFormatOptions[], separator: stri
 }
 
 export function formatDate(date: Date = new Date()) {
-	const options = [{ year: 'numeric' }, { month: 'numeric' }, { day: 'numeric' }];
+	const options: Intl.DateTimeFormatOptions[] = [
+		{ year: 'numeric' },
+		{ month: 'numeric' },
+		{ day: 'numeric' }
+	];
 	return join(date, options, '-');
 }

@@ -1,6 +1,242 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--color-iamdreamingof-50: #ebe9f1;
+	--color-iamdreamingof-100: #d7d3e3;
+	--color-iamdreamingof-200: #aca5c5;
+	--color-iamdreamingof-300: #8479a9;
+	--color-iamdreamingof-400: #5f5483;
+	--color-iamdreamingof-500: #3e3756;
+	--color-iamdreamingof-600: #322c44;
+	--color-iamdreamingof-700: #262235;
+	--color-iamdreamingof-800: #191622;
+	--color-iamdreamingof-900: #0e0c13;
+	--color-iamdreamingof-950: #070609;
+}
+
+/* Perlin-noise-like gradient background */
+.dream-background {
+	background:
+		radial-gradient(ellipse at top left, rgba(132, 121, 169, 0.1) 0%, transparent 50%),
+		radial-gradient(ellipse at top right, rgba(95, 84, 131, 0.1) 0%, transparent 50%),
+		radial-gradient(ellipse at bottom left, rgba(172, 165, 197, 0.1) 0%, transparent 50%),
+		radial-gradient(ellipse at bottom right, rgba(62, 55, 86, 0.1) 0%, transparent 50%),
+		radial-gradient(circle at center, rgba(132, 121, 169, 0.05) 0%, transparent 70%);
+	background-size:
+		200% 200%,
+		250% 250%,
+		300% 300%,
+		150% 150%,
+		100% 100%;
+	animation: dreamShift 20s ease-in-out infinite;
+}
+
+@keyframes dreamShift {
+	0%,
+	100% {
+		background-position:
+			0% 0%,
+			100% 100%,
+			100% 0%,
+			0% 100%,
+			50% 50%;
+	}
+	25% {
+		background-position:
+			100% 0%,
+			0% 100%,
+			0% 0%,
+			100% 100%,
+			50% 50%;
+	}
+	50% {
+		background-position:
+			100% 100%,
+			0% 0%,
+			0% 100%,
+			100% 0%,
+			50% 50%;
+	}
+	75% {
+		background-position:
+			0% 100%,
+			100% 0%,
+			100% 100%,
+			0% 0%,
+			50% 50%;
+	}
+}
+
+/* Dreamlike animations */
+@keyframes gentle-pulse {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.85;
+		transform: scale(1.02);
+	}
+}
+
+@keyframes soft-glow {
+	0%,
+	100% {
+		filter: blur(0px) brightness(1);
+	}
+	50% {
+		filter: blur(1px) brightness(1.1);
+	}
+}
+
+@keyframes fade-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-in-scale {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes ripple {
+	to {
+		transform: scale(1.5);
+		opacity: 0;
+	}
+}
+
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -200% center;
+	}
+	100% {
+		background-position: 200% center;
+	}
+}
+
+@keyframes reveal-glow {
+	0% {
+		transform: scale(1);
+		filter: brightness(1) drop-shadow(0 0 10px rgba(132, 121, 169, 0));
+	}
+	10% {
+		transform: scale(1.05);
+		filter: brightness(1.2) drop-shadow(0 0 40px rgba(132, 121, 169, 0.9));
+	}
+	50% {
+		transform: scale(1.03);
+		filter: brightness(1.15) drop-shadow(0 0 30px rgba(172, 165, 197, 0.8));
+	}
+	100% {
+		transform: scale(1.02);
+		filter: brightness(1.1) drop-shadow(0 0 25px rgba(132, 121, 169, 0.6));
+	}
+}
+
+.dreamlike-transition {
+	transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-glow {
+	animation: reveal-glow 2s ease-out forwards;
+	transform-origin: center;
+}
+
+.gentle-appear {
+	animation: fade-in-up 1.2s ease-out forwards;
+}
+
+.float-animation {
+	animation: float 3s ease-in-out infinite;
+}
+
+.pulse-animation {
+	animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+.shimmer-text {
+	background: linear-gradient(
+		90deg,
+		currentColor 40%,
+		rgba(255, 255, 255, 0.3) 50%,
+		currentColor 60%
+	);
+	background-size: 200% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	animation: shimmer 3s linear infinite;
+}
+
+/* Glow effect for newly guessed words */
+.word-glow {
+	animation: word-glow 1.8s ease-out;
+}
+
+@keyframes word-glow {
+	0% {
+		text-shadow:
+			0 0 0px rgba(132, 121, 169, 0),
+			0 0 0px rgba(255, 255, 255, 0);
+		filter: brightness(1);
+		transform: scale(1);
+	}
+	30% {
+		text-shadow:
+			0 0 40px rgba(132, 121, 169, 1),
+			0 0 80px rgba(132, 121, 169, 0.6),
+			0 0 120px rgba(255, 255, 255, 0.4);
+		filter: brightness(1.5) contrast(1.2);
+		transform: scale(1.15);
+	}
+	60% {
+		text-shadow:
+			0 0 30px rgba(132, 121, 169, 0.8),
+			0 0 60px rgba(132, 121, 169, 0.4);
+		filter: brightness(1.3);
+		transform: scale(1.08);
+	}
+	100% {
+		text-shadow: 0 0 15px rgba(132, 121, 169, 0.4);
+		filter: brightness(1.1);
+		transform: scale(1);
+	}
+}
+
+.blur-background {
+	backdrop-filter: blur(8px);
+	transition: backdrop-filter 0.5s ease;
+}
+
+.blur-background-light {
+	backdrop-filter: blur(2px);
+	transition: backdrop-filter 0.5s ease;
+}
 
 .annapurna-sil-regular {
 	font-family: 'Annapurna SIL', serif;
