@@ -1,6 +1,8 @@
 <script>
 	import '../app.css';
 	import HelpModal from '$lib/components/HelpModal.svelte';
+	import { onNavigate } from '$app/navigation';
+
 	let hasSeenHelp = localStorage.getItem('hasSeenHelp');
 	let showModal = false;
 	if (!hasSeenHelp) {
@@ -11,6 +13,18 @@
 	} else {
 		document.body?.classList.remove('overflow-hidden');
 	}
+
+	// Enable view transitions
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 {#if !showModal}

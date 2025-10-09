@@ -17,7 +17,9 @@
 	onMount(async () => {
 		const res = await fetch('https://cdn.iamdreamingof.com/days.json');
 		const json: Days = await res.json();
-		days = json.days;
+
+		const today = new Date().toISOString().split('T')[0];
+		days = json.days.filter((day) => day.date !== today);
 	});
 
 	function selectDay(event: Event) {

@@ -9,12 +9,21 @@
 
 @layer base {
 	body {
-		font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+		font-family:
+			'Poppins',
+			system-ui,
+			-apple-system,
+			'Segoe UI',
+			Roboto,
+			Helvetica,
+			Arial,
+			sans-serif;
 	}
 }
 
 @theme {
-	--font-family-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--font-family-sans:
+		'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	--font-family-serif: 'Annapurna SIL', Georgia, Cambria, 'Times New Roman', serif;
 	--color-iamdreamingof-50: #ebe9f1;
 	--color-iamdreamingof-100: #d7d3e3;
@@ -251,4 +260,39 @@
 	transition: backdrop-filter 0.5s ease;
 }
 
+/* View Transitions - Ethereal crossfade effects */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 0.5s;
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+::view-transition-old(root) {
+	animation-name: fade-out-ethereal;
+}
+
+::view-transition-new(root) {
+	animation-name: fade-in-ethereal;
+}
+
+@keyframes fade-out-ethereal {
+	from {
+		opacity: 1;
+		filter: blur(0px);
+	}
+	to {
+		opacity: 0;
+		filter: blur(3px);
+	}
+}
+
+@keyframes fade-in-ethereal {
+	from {
+		opacity: 0;
+		filter: blur(3px);
+	}
+	to {
+		opacity: 1;
+		filter: blur(0px);
+	}
+}

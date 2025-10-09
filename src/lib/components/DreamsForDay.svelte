@@ -14,7 +14,7 @@
 	let day: DreamsForDay;
 	let finished = false;
 	let error: string;
-	$: if (id && !finished) {
+	$: if (id) {
 		loadDay();
 	}
 	$: challenges = day?.challenges;
@@ -39,6 +39,11 @@
 	});
 
 	async function loadDay() {
+		// Reset state immediately when loading a new day
+		currentLevel = 0;
+		finished = false;
+		error = '';
+
 		if (id == null || (id !== 'today' && !id.match(/^\d{4}-\d{2}-\d{2}$/))) {
 			console.error('Invalid date provided');
 			error = 'Nothing found here...';
@@ -55,9 +60,6 @@
 			error = 'Nothing found here...';
 			return;
 		}
-		currentLevel = 0;
-		finished = false;
-		error = '';
 		day = await res.json();
 	}
 
@@ -77,40 +79,44 @@
 	}
 </script>
 
-{#if error}
-	<div class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
-		<div class="text-center">
-			<div class="dark:text-iamdreamingof-200 my-3">
-				{error}
+{#key id}
+	{#if error}
+		<div class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
+			<div class="text-center">
+				<div class="dark:text-iamdreamingof-200 my-3">
+					{error}
+				</div>
 			</div>
 		</div>
-	</div>
-{:else if !finished}
-	{#if currentChallenge}
-		{@const isFinal = currentLevel >= LEVELS.length - 1}
-		<Challenge
-			challenge={currentChallenge}
-			finalChallenge={isFinal}
-			onNextLevel={nextLevel}
-			onFinish={finish}
-		/>
-	{/if}
-{:else}
-	<!-- TODO: Would be much better to iterate over, but eh -->
-	{#if challenges && day}
-		<h1 class="text-sm text-iamdreamingof-300">What I dreamed of on {day.date}</h1>
-		<Challenge challenge={challenges.dreaming} solved={true} />
-		<Challenge challenge={challenges.hard} solved={true} />
-		<Challenge challenge={challenges.medium} solved={true} />
-		<Challenge challenge={challenges.easy} solved={true} />
+	{:else if !finished}
+		{#if currentChallenge}
+			{@const isFinal = currentLevel >= LEVELS.length - 1}
+			{#key currentLevel}
+				<Challenge
+					challenge={currentChallenge}
+					finalChallenge={isFinal}
+					onNextLevel={nextLevel}
+					onFinish={finish}
+				/>
+			{/key}
+		{/if}
 	{:else}
-		<div>Loading final results...</div>
+		<!-- TODO: Would be much better to iterate over, but eh -->
+		{#if challenges && day}
+			<h1 class="text-sm text-iamdreamingof-300">What I dreamed of on {day.date}</h1>
+			<Challenge challenge={challenges.dreaming} solved={true} />
+			<Challenge challenge={challenges.hard} solved={true} />
+			<Challenge challenge={challenges.medium} solved={true} />
+			<Challenge challenge={challenges.easy} solved={true} />
+		{:else}
+			<div>Loading final results...</div>
+		{/if}
+		{#if id === 'today'}
+			<div class="text-center my-8 py-6">
+				<p class="text-2xl dark:text-iamdreamingof-300 text-iamdreamingof-500 italic font-serif">
+					I am done dreaming for today, come back tomorrow.
+				</p>
+			</div>
+		{/if}
 	{/if}
-	{#if id === 'today'}
-		<div class="text-center my-8 py-6">
-			<p class="text-2xl dark:text-iamdreamingof-300 text-iamdreamingof-500 italic font-serif">
-				I am done dreaming for today, come back tomorrow.
-			</p>
-		</div>
-	{/if}
-{/if}
+{/key}
