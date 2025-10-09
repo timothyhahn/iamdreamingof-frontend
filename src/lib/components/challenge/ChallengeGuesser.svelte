@@ -156,7 +156,7 @@
 		bind:this={inputElement}
 		bind:value={inputValue}
 		onkeydown={handleKeydown}
-		class="bg-white dark:bg-iamdreamingof-800 text-iamdreamingof-800 dark:text-iamdreamingof-100 rounded w-full py-2 text-center poppins-thin ring-0 focus:ring-1 ring-iamdreamingof-500 dark:ring-iamdreamingof-300 transition-all duration-500 dreamlike-transition"
+		class="bg-white dark:bg-iamdreamingof-800 text-iamdreamingof-800 dark:text-iamdreamingof-100 rounded w-full py-2 text-center font-thin ring-1 ring-iamdreamingof-100 dark:ring-iamdreamingof-300 transition-all duration-500 dreamlike-transition"
 		placeholder="What was I dreaming of?"
 	/>
 </form>

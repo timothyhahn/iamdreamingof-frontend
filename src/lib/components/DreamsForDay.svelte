@@ -107,8 +107,10 @@
 		<div>Loading final results...</div>
 	{/if}
 	{#if id === 'today'}
-		<div class="dark:text-iamdreamingof-200 my-3">
-			I am done dreaming for today, come back tomorrow.
+		<div class="text-center my-8 py-6">
+			<p class="text-2xl dark:text-iamdreamingof-300 text-iamdreamingof-500 italic font-serif">
+				I am done dreaming for today, come back tomorrow.
+			</p>
 		</div>
 	{/if}
 {/if}

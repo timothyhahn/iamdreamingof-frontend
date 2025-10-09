@@ -23,7 +23,7 @@
 	}}
 	on:click|self={() => dialog.close()}
 >
-	<div class="fixed inset-0 z-10 w-screen overflow-y-auto poppins-medium text-left">
+	<div class="fixed inset-0 z-10 w-screen overflow-y-auto font-medium text-left">
 		<div class="flex min-h-full items-end justify-center p-10">
 			<div
 				class="w-screen lg:w-2/3 relative transform overflow-hidden rounded-lg dark:bg-iamdreamingof-800 dark:text-iamdreamingof-100 px-4 pb-4 pt-5 text-left shadow-xl"
@@ -51,7 +51,7 @@
 				</div>
 				<div class="">
 					<div class="mt-3">
-						<h1 class="text-2xl annapurna-sil-regular">A guide to "I am dreaming of..."</h1>
+						<h1 class="text-2xl font-serif">A guide to "I am dreaming of..."</h1>
 						<div class="mt-2">
 							<p>I have provided an AI model three words which it uses to describe a scene.</p>
 							<p>

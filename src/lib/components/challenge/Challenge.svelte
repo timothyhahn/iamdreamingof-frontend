@@ -62,10 +62,7 @@
 			isRevealed = true;
 
 			if (finalChallenge && onFinish) {
-				// Minimal delay just for the animation to start
-				setTimeout(() => {
-					onFinish();
-				}, 500);
+				onFinish();
 			}
 		}
 	});
@@ -162,7 +159,7 @@
 
 <div in:fade={{ duration: 1500, easing: quintOut }} class="relative">
 	<div
-		class="dark:text-iamdreamingof-200 text-iamdreamingof-500 text-3xl annapurna-sil-regular pb-6 text-center dreamlike-transition"
+		class="dark:text-iamdreamingof-200 text-iamdreamingof-500 text-3xl font-serif pb-6 text-center dreamlike-transition"
 		style="line-height: 5rem;"
 		in:fly={{ y: -20, duration: 1200, delay: 300, easing: quintOut }}
 	>
@@ -173,9 +170,9 @@
 
 		<hr class="my-3 px-6 dreamlike-transition" in:fade={{ duration: 800, delay: 900 }} />
 
-		<span class="poppins-medium">
+		<div class="font-medium">
 			{#if challengeComplete}
-				<div data-testid="challenge-complete" in:fade={{ duration: 1200, easing: quintOut }}>
+				<div data-testid="challenge-complete" in:fade={{ duration: finalChallenge ? 0 : 1200, easing: quintOut }}>
 					<ChallengePrompt prompt={challenge.prompt} />
 					{#if !finalChallenge && !solved}
 						<div
@@ -206,6 +203,6 @@
 				{/if}
 				<ChallengeReveal onReveal={reveal} />
 			{/if}
-		</span>
+		</div>
 	</div>
 </div>
